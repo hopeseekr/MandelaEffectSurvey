@@ -1,0 +1,34 @@
+{
+  "title": "Common Trademarks",
+  "questions" : [
+    {
+      "text": "A famous consumer goods company: _____ & Gamble",
+      "options": [
+        "Procter & Gamble",
+        "Proctor & Gamble"
+      ]
+    },
+    {
+      "text": "A popular clothes store",
+      "options": [
+        "J.C. Penney",
+        "JC Penny's",
+        "JCPenney"
+      ]
+    },
+    {
+      "text": "Famous hotdog company",
+      "options": [
+        "Oscar Meyer",
+        "Oscar Mayer"
+      ]
+    },
+    {
+      "text": "A hardware store",
+      "options": [
+        "Home Depot",
+        "The Home Depot"
+      ]
+    }
+  ]
+}

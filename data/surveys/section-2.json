@@ -1,0 +1,36 @@
+{
+  "title": "Popular Sayings",
+  "questions" : [
+    {
+      "text": "Mr. Rogers: It's a beautiful day in ____ neighborhood",
+      "options": [
+        "The",
+        "This",
+        "My",
+        "A"
+      ]
+    },
+    {
+      "text": "How did Darth Vader tell Luke he was his father?",
+      "options": [
+        "Luke! ... I am your father!",
+        "No, I am your father.",
+        "I am your father"
+      ]
+    },
+    {
+      "text": "Forrest Gump: Momma always said: Life ____ like a box of chocolates.",
+      "options": [
+        "is",
+        "was"
+      ]
+    },
+    {
+      "text": "Snow White: What did the queen say to the mirror?",
+      "options": [
+        "Mirror, Mirror, on the wall",
+        "Magic Mirror on the wall"
+      ]
+    }
+  ]
+}
