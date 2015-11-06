@@ -22,6 +22,32 @@ div.main {
             generations more affected, while older generations seeem immune? Are Mandela Effect witnesses mostly empaths?</p>
             <p>Answer this survey, and let's get to some answers!</p>
 
+            <form method="post" action="app.php?context=survey&action=addQuestion">
+
+
+            </form>
+            <h3>Current Questions</h3>
+<?php
+$dh = opendir('data/surveys/');
+while ($filename = readdir($dh)) {
+    if ($filename == '.' || $filename == '..') {
+        continue;
+    }
+    $surveySection = json_decode(file_get_contents('data/surveys/' . $filename));
+    echo $surveySection->title;
+    ?>
+            <ol>
+<?php
+        foreach ($surveySection->questions as $question) {
+?>
+                <li><?php echo htmlspecialchars($question->text); ?></li>
+<?php
+        }
+?>
+            </ol>
+<?php
+}
+?>
             <form method="post" action="app.php?context=survey&action=submit">
                 <div id="survey">
                     <button id="beginSurvey" class="btn btn-primary nextSection">Begin</button>
