@@ -23,4 +23,27 @@ class SurveyController
 
         include 'views/surveySection.php';
     }
+
+    public function addQuestionAction()
+    {
+        if (empty($_POST['question'])) {
+            exit;
+        }
+
+        $file = 'data/submissions/question-' . uniqid() . '.json';
+        $data = [
+            'text' => $_POST['question'],
+            'options' => $_POST['options']
+        ];
+
+        // Repeat until the random ID is truly unique.
+        if (file_exists($file)) {
+            $this->addQuestionAction();
+            return;
+        }
+
+        file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT));
+
+        header('Location: index.php?addQuestion=1');
+    }
 }

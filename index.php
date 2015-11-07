@@ -22,8 +22,51 @@ div.main {
             generations more affected, while older generations seeem immune? Are Mandela Effect witnesses mostly empaths?</p>
             <p>Answer this survey, and let's get to some answers!</p>
 
-            <form method="post" action="app.php?context=survey&action=addQuestion">
-
+            <form class="form-horizontal" id="addQuestion" role="form" method="post" action="app.php?context=survey&action=addQuestion">
+                <h3>Add a Question</h3>
+                <?php
+                if (!empty($_GET['addQuestion']) && $_GET['addQuestion'] == 1) {
+                ?>
+                <h3>
+                    <span class="label label-success">
+                        Thank you for submitting a question for review! Submit another?
+                    </span>
+                </h3>
+                <?php
+                }
+                ?>
+                <p>Don't see a Mandela Effect below? Submit it for inclusion!</p>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="question">Question</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="question" id="question"
+                               placeholder="Try no tto give the answer away"/>
+                    </div>
+                </div>
+                <div id="options">
+                    <div class="form-group" id="form-group-opt-1">
+                        <label class="control-label col-sm-2" for="option-1">Option 1:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="options[]"
+                                id="option-1" placeholder="Potential answer"/>
+                        </div>
+                    </div>
+                    <div class="form-group" id="form-group-opt-2">
+                        <label class="control-label col-sm-2" for="option-2">Option 2:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="options[]"
+                                   id="option-2" placeholder="Potential answer"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-success addQuestionOptionButton">Add Option</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-danger">Submit Question</button>
+                    </div>
+                </div>
 
             </form>
             <h3>Current Questions</h3>

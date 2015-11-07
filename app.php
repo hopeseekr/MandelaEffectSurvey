@@ -18,7 +18,8 @@ if (!$context || $context == "home" && $action == "index") {
     header('Location: .');
 }
 
-$controllerName = $context . "Controller";
+// Fix case-sensitive file systems (e.g., Linux).
+$controllerName = ucfirst($context) . "Controller";
 if (class_exists($controllerName)) {
 
     $controller = new $controllerName();
