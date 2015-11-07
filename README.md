@@ -18,3 +18,4 @@ to answer the following questions:
 
 Watching the coding time lapse videos!
 - Up to Version 0.2: https://vimeo.com/144913336
+- Up to Version 0.5: https://vimeo.com/144968781
