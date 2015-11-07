@@ -94,6 +94,7 @@ while ($filename = readdir($dh)) {
             <form method="post" action="app.php?context=survey&action=submit">
                 <div id="survey">
                     <button id="beginSurvey" class="btn btn-primary nextSection">Begin</button>
+                    <h2 id="mockupWarning" class="bg-danger" style="padding: 15px 20px">Do not complete the survey!! It does not work yet! It's a mockup.</h2>
                 </div>
             </form>
         </div>
