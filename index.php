@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Mandela Effect Survey + Profiler</title>
         <link rel="stylesheet" href="css/bootstrap.min.css"/>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css"/>
