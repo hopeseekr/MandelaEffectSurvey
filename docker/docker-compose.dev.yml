@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  api:
+    image: ${WEB_DEBUG_ACCOUNT}/${WEB_DEBUG_REPO}:${WEB_DEBUG_TAG}
+    ports:
+      - 80:80
+
+  db:
+    ports:
+      - 5432:5432

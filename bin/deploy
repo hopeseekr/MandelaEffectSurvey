@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd )"
+
+. "${ROOT}"/bin/lib/exitCheck.sh
+
+IMAGE=registry.heroku.com/rapidwristbands/web
+
+# Ensure working directory is clean
+echo "Ensuring working tree is clean..."
+DIFF=`git diff | wc -l`
+if [ `printf "$DIFF"` != 0 ]; then
+  echo "Working tree contains changes. Please commit, stash or discard them and try again.";
+  exit 1;
+else
+  echo "Working tree is clean, proceeding."
+fi
+
+# Check for .env.heroku file
+echo ""
+echo "Ensuring .env.heroku file is present.."
+if [ ! -e "$ROOT"/.env.heroku ]; then
+  echo ".env.heroku file is missing. Please create it and try again.";
+  exit 1;
+else
+  echo ".env.heroku fils is present. proceeding."
+fi
+
+# Change to Project root
+echo ""
+echo "Changing to Project root.."
+cd "$ROOT"
+exitCheck $?
+
+# Checkout master branch
+echo ""
+echo "Checking out master..."
+git checkout master
+exitCheck $?
+
+# Initializing project
+echo ""
+echo "Initializing Project..."
+init_project
+exitCheck $?
+
+# Build Heroku Image
+echo ""
+echo "Building Heroku Docker Image..."
+docker build . -f docker/web-prod/Dockerfile -t ${IMAGE}
+
+## Push Heroku Image
+echo ""
+echo "Pushing Docker Image to Heroku..."
+docker push ${IMAGE}
+exitCheck $?

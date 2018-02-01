@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+. "${DIR}"/lib/args.sh
+. "${DIR}"/lib/images.sh
+. "${DIR}"/lib/rm.sh
+. "${DIR}"/lib/tty.sh
+
+COMMAND="echo pid1 > /dev/null && npm $ARGS"
+
+docker run -i${TTY} -v $(pwd):/data ${RM} ${NODE_ACCOUNT}/${NODE_REPO}:${NODE_TAG} "${COMMAND}"

@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  api:
+    image: ${WEB_ACCOUNT}/${WEB_REPO}:${WEB_TAG}
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - ..:/var/www
+
+  db:
+    image: ${POSTGRES_REPO}:${POSTGRES_TAG}
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: mandelaeffectsurvey

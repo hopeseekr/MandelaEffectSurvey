@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+. "${DIR}"/lib/args.sh
+. "${DIR}"/lib/env.sh
+. "${DIR}"/lib/images.sh
+. "${DIR}"/lib/rm.sh
+. "${DIR}"/lib/tty.sh
+
+cat <<-EOF | "${DIR}"/psql
+CREATE DATABASE $1;
+EOF

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+. "${DIR}"/lib/args.sh
+. "${DIR}"/lib/env.sh
+. "${DIR}"/lib/images.sh
+. "${DIR}"/lib/rm.sh
+. "${DIR}"/lib/tty.sh
+. "${DIR}"/../.env
+
+COMMAND="exec psql --host=db --dbname=postgres ${ARGS}"
+
+docker run \
+    -i${TTY} \
+    --net ${PROJECT_NAME}_default \
+    -e PGPASSWORD="${DB_PASSWORD}" \
+    ${RM} \
+    --volume ~/.pgpass:/root/.pgpass \
+    -v $(pwd):/data \
+    ${POSTGRES_REPO}:${POSTGRES_TAG} \
+    sh -c "${COMMAND}"

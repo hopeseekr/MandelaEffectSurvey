@@ -1,0 +1,17 @@
+# phpexperts/api-mandelaeffectsurvey-php-debug
+FROM phpexperts/api-mandelaeffectsurvey-php:2018-02-01
+
+COPY xdebug.conf /tmp
+
+RUN apt-get update && \
+    apt-get install -y php-xdebug && \
+
+    # Configure XDebug
+    cat /tmp/xdebug.conf >> /etc/php/${PHP_VERSION}/mods-available/xdebug.ini && \
+    rm /tmp/xdebug.conf && \
+
+    # Cleanup
+    apt-get remove -y && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*

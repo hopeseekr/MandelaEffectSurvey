@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+. "${DIR}"/../.env
+. "${DIR}"/lib/args.sh
+. "${DIR}"/lib/env.sh
+. "${DIR}"/lib/images.sh
+. "${DIR}"/lib/rm.sh
+. "${DIR}"/lib/tty.sh
+
+source "${DIR}"/../.env
+
+docker run  -i${TTY} ${RM} \
+            --net ${PROJECT_NAME}_default ${ENV} \
+            ${REDIS_REPO}:${REDIS_TAG} redis-cli -h redis -a ${REDIS_PASSWORD} ${ARGS}

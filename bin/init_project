@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+. "${DIR}"/lib/env.sh
+. "${DIR}"/lib/exitCheck.sh
+. "${DIR}"/lib/images.sh
+
+DB_PASSWORD=root
+NETWORK=${PROJECT_NAME}_default
+
+BLACK_ON_GREEN='\e[42m\e[30m'
+BLACK_ON_YELLOW='\e[43m\e[30m'
+BLACK_ON_RED='\e[41m\e[30m'
+RESET='\e[0m';
+
+# Ensure Docker network exists (needed to run composer in php container)
+if [ `docker network ls | grep ${NETWORK} | wc -l` == 0 ]; then
+  echo "Creating Docker network ${NETWORK}"
+  docker network create ${NETWORK}
+else
+  echo "Docker network ${NETWORK} already exists"
+fi
+
+# Ensure .env file exists
+echo -e "\n${BLACK_ON_GREEN}-> Checking .env file...${RESET}"
+if [ ! -e "$DIR"/../.env ]; then
+  echo "No .env file found. Creating from .env.example..."
+  cp "$DIR"/../.env.example "$DIR"/../.env
+  exitCheck $?
+  echo -e "${BLACK_ON_YELLOW}NOTE: Please review the .env file and configure any required parameters.${RESET}"
+else
+  echo ".env file exists. Skipping create."
+  echo -e "${BLACK_ON_YELLOW}NOTE: Please review the .env.example file and ensure all required parameters are present in .env${RESET}"
+fi
+
+# source the .ENV file after it is created
+. "${DIR}"/../.env
+
+# Install composer dependencies
+echo -e "\n${BLACK_ON_GREEN}-> Installing Composer dependencies...${RESET}"
+composer install --no-interaction
+exitCheck $?
+
+# Start containers
+if [ `docker-compose -p ${PROJECT_NAME} -f ${DIR}/../docker/docker-compose.base.yml ps -q | grep ' Up ' | wc -l` == 0 ]; then
+  echo "Starting containers"
+  ${DIR}/containers up -d
+  ${DIR}/wait_for_services
+else
+  echo "Containers are already running"
+fi
+
+echo -e "\n${BLACK_ON_GREEN}-> Recreating the database${RESET}"
+
+"$DIR"/dropdb mandelaeffectsurvey
+echo "Creating database... (This takes time :("
+"$DIR"/createdb mandelaeffectsurvey
+
+
+# "${DIR}"/psql -d mandelaeffectsurvey -f /data/sql/mesurvey.sql
+
+
+# Delete all the keys of all the existing Redis databases
+echo -e "\n${BLACK_ON_GREEN}-> Resetting Redis DB${RESET}"
+redis flushall
+exitCheck $?
+
+# Run Database Migrations
+echo -e "\n${BLACK_ON_GREEN}-> Running database Migrations${RESET}"
+php artisan migrate
+exitCheck $?
+
+# Inserting data into the tables
+echo -e "\n${BLACK_ON_GREEN}-> Seeding database with test data${RESET}"
+php artisan db:seed
+exitCheck $?
