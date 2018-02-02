@@ -8,12 +8,10 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 . "${DIR}"/lib/rm.sh
 . "${DIR}"/lib/tty.sh
 
-COMMAND="echo pid1 > /dev/null && php $ARGS"
-
-docker run -u=1000 -i${TTY} \
+docker run -i${TTY} \
     -v $(pwd):/data ${RM} \
     -v ~/.composer:/var/www/.composer \
     -v ~/.ssh:/var/www/.ssh \
     --net ${PROJECT_NAME}_default ${ENV} \
     --link api:api.mandelaeffectsurvey.local \
-    ${PHP_ACCOUNT}/${PHP_REPO}:${PHP_TAG} "${COMMAND}"
+    ${PHP_ACCOUNT}/${PHP_REPO}:${PHP_TAG} php "$@" 
