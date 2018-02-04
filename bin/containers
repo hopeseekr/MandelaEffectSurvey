@@ -1,13 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-. "${DIR}"/lib/args.sh
-. "${DIR}"/lib/env.sh
-. "${DIR}"/../.env
-. "${DIR}"/lib/images.sh
+. "${ROOT}"/docker/lib/env.sh
 
 docker-compose -p $PROJECT_NAME \
-    -f "$DIR"/../docker/docker-compose.base.yml \
-    -f "$DIR"/../docker/docker-compose.dev.yml \
-    ${ARGS}
+    -f "$ROOT"/docker/docker-compose.base.yml \
+    -f "$ROOT"/docker/docker-compose.dev.yml \
+    "$@"
+

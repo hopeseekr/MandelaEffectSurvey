@@ -1,8 +1,8 @@
 version: '2'
 
 services:
-  api:
-    image: ${WEB_ACCOUNT}/${WEB_REPO}:${WEB_TAG}
+  web:
+    image: phpexperts/web:nginx-php7.2
     depends_on:
       - db
     links:
@@ -11,8 +11,19 @@ services:
       - ..:/var/www
 
   db:
-    image: ${POSTGRES_REPO}:${POSTGRES_TAG}
+    image: postgres:9.6
+    volumes:
+      - /var/lib/docker/postgresql:/var/lib/postgresql
+
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: mandelaeffectsurvey
+      POSTGRES_DB: projectdb
+
+  redis:
+    image: redis:3.2.6
+    entrypoint:
+      - redis-server
+      - --requirepass ${REDIS_PASSWORD}
+      - --loglevel notice
+

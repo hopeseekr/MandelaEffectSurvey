@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-. "${DIR}"/lib/args.sh
-. "${DIR}"/lib/env.sh
-. "${DIR}"/lib/images.sh
-. "${DIR}"/lib/rm.sh
-. "${DIR}"/lib/tty.sh
+. "${ROOT}"/docker/lib/env.sh
 
-cat <<-EOF | "${DIR}"/psql
-CREATE DATABASE $1;
-EOF
+. "${ROOT}"/docker/lib/network.sh
+
+docker run \
+    --net ${PROJECT_NAME}_default \
+    -it \
+    --volume ~/.pgpass:/root/.pgpass \
+    -v $(pwd):/data \
+    postgres:9.6 \
+    createdb --host=db "$@"

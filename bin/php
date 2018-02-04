@@ -1,17 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-. "${DIR}"/lib/args.sh
-. "${DIR}"/lib/env.sh
-. "${DIR}"/lib/images.sh
-. "${DIR}"/lib/rm.sh
-. "${DIR}"/lib/tty.sh
+. "${ROOT}"/docker/lib/env.sh
 
-docker run -i${TTY} \
-    -v $(pwd):/data ${RM} \
-    -v ~/.composer:/var/www/.composer \
-    -v ~/.ssh:/var/www/.ssh \
-    --net ${PROJECT_NAME}_default ${ENV} \
-    --link api:api.mandelaeffectsurvey.local \
-    ${PHP_ACCOUNT}/${PHP_REPO}:${PHP_TAG} php "$@" 
+. "${ROOT}"/docker/lib/network.sh
+
+docker run -u=$UID -v /etc/passwd:/etc/passwd:ro --network="${PROJECT_NAME}_default" -e LOCAL_USER_ID=${DOCKER_HOST_USER_ID} -it -v $(pwd):/workdir --rm --entrypoint=/usr/bin/php phpexperts/php:7 "$@"

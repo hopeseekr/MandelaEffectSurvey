@@ -11,5 +11,5 @@ docker run \
     -it \
     --volume ~/.pgpass:/root/.pgpass \
     -v $(pwd):/data \
-    postgres:9.6 \
-    dropdb --host=db "$@"
+    mariadb:10.3 \
+    mysql --host=db "$@"

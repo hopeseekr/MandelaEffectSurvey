@@ -12,4 +12,4 @@ docker run \
     --volume ~/.pgpass:/root/.pgpass \
     -v $(pwd):/data \
     postgres:9.6 \
-    dropdb --host=db "$@"
+    pg_dump --host=db "$@"

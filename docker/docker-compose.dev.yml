@@ -1,8 +1,8 @@
 version: '2'
 
 services:
-  api:
-    image: ${WEB_DEBUG_ACCOUNT}/${WEB_DEBUG_REPO}:${WEB_DEBUG_TAG}
+  web:
+    image: phpexperts/web:nginx-php7.2-debug
     ports:
       - 80:80
 
