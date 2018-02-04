@@ -1,6 +1,6 @@
 <?php
 ?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Mandela Effect Survey + Profiler</title>

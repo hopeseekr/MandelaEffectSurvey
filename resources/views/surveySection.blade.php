@@ -23,7 +23,7 @@
                     <label for="<?php echo "q$qIdx-$oIdx"; ?>">Not sure / No clue</label>
                 </li>
                 <li>
-                    <input type="radio" class="otherInput" id="<?php ++$oIdx; echo "q$qIdx-{$oIdx}"; ?>" name="<?php echo "question[$qIdx]"; ?>" value="<?php echo $oIdx ?>"/>
+                    <input type="radio" class="otherInput" data-index="{{$qIdx}}" id="<?php ++$oIdx; echo "q$qIdx-{$oIdx}"; ?>" name="<?php echo "question[$qIdx]"; ?>" value="<?php echo $oIdx ?>"/>
                     <label for="<?php echo "q$qIdx-$oIdx"; ?>">Other</label>
                 </li>
             </ol>
